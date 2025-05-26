@@ -16,10 +16,10 @@ def fibonacci_it(number)
   new_array
 end
 
-p fibonacci_it(1)
-p fibonacci_it(2)
-p fibonacci_it(8)
-p fibonacci_it(16)
+# p fibonacci_it(1)
+# p fibonacci_it(2)
+# p fibonacci_it(8)
+# p fibonacci_it(16)
 
 def fibonacci_calc(number)
   return 0 if number == 1
@@ -29,12 +29,17 @@ def fibonacci_calc(number)
 end
 
 def fibonacci_rec(number)
-  new_array = []
-  number.times { |current_number| new_array << fibonacci_calc(current_number + 1) }
-  new_array
+  # this is shamelessly stolen, i could not figure out how to recursively return an array
+  # apparently you dont and just reassign in everytime
+  return my_array = [0] if number == 1
+  return my_array = [0, 1] if number == 2
+
+  my_array = fibonacci_rec(number - 1)
+  my_array.push(my_array[-2] + my_array[-1])
 end
 
 p fibonacci_rec(1)
 p fibonacci_rec(2)
+p fibonacci_rec(3)
 p fibonacci_rec(8)
-p fibonacci_rec(16)
+# p fibonacci_rec(16)
