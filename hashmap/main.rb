@@ -17,4 +17,6 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
-p test.entries
+p test.keys
+test.remove('grape')
+p test.keys

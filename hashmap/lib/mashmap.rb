@@ -12,15 +12,26 @@ class Hashmap
   end
 
   def find_node(key)
+    node_array = gather_hashnodes(key)
+    answer = nil
+    node_array.each do |node|
+      answer = node if node.key == key
+    end
+    answer
+  end
+
+  def gather_hashnodes(key)
+    node_array = []
     my_hash = hash(key)
-    return nil if my_hash >= @buckets.length
-    return nil if @buckets[my_hash].nil?
-
     my_node = @buckets[my_hash]
-    my_node = my_node.next_node until my_node.nil? || my_node.key == key
-    return my_node unless my_node.nil?
+    return node_array if my_node.nil?
 
-    nil
+    node_array << my_node
+    until my_node.next_node.nil?
+      my_node = my_node.next_node
+      node_array << my_node
+    end
+    node_array
   end
 
   def implement_node(new_node)
@@ -78,6 +89,22 @@ class Hashmap
     return true unless find_node(key).nil?
 
     false
+  end
+
+  def remove(key)
+    node_array = gather_hashnodes(key)
+    my_node = find_node(key)
+    return nil if my_node.nil?
+
+    index_in_hash = node_array.index(my_node)
+    if index_in_hash.zero?
+      @buckets[hash(key)] = my_node.next_node
+    else
+      previous_node = node_array[index_in_hash - 1]
+      previous_node.write_next(my_node.next_node)
+    end
+    @stored_keys -= 1
+    my_node.value
   end
 
   def length
