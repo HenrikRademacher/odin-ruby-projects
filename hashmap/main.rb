@@ -17,5 +17,4 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
-
-p test.find_node('grape').next_node.key
+p test.entries

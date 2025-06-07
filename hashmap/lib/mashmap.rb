@@ -34,6 +34,20 @@ class Hashmap
     end
   end
 
+  def gather_nodes
+    node_array = []
+    @buckets.each do |bucket|
+      next if bucket.nil?
+
+      node_array << bucket
+      until bucket.next_node.nil?
+        bucket = bucket.next_node
+        node_array << bucket
+      end
+    end
+    node_array
+  end
+
   def hash(key)
     hash_code = 0
     prime_number = 31
@@ -73,5 +87,35 @@ class Hashmap
   def clear
     @buckets = Array.new(16)
     @stored_keys = 0
+  end
+
+  def keys
+    node_array = gather_nodes
+    key_array = []
+    node_array.each do |node|
+      key_array << node.key
+    end
+    key_array
+  end
+
+  def values
+    node_array = gather_nodes
+    value_array = []
+    node_array.each do |node|
+      value_array << node.value
+    end
+    value_array
+  end
+
+  def entries
+    node_array = gather_nodes
+    entries_array = []
+    node_array.each do |node|
+      entry = []
+      entry[0] = node.key
+      entry[1] = node.value
+      entries_array << entry
+    end
+    entries_array
   end
 end
