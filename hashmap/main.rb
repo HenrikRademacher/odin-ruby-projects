@@ -41,3 +41,12 @@ test.remove('dog')
 test.remove('elephant')
 test.remove('banana')
 p test.entries
+
+my_hashset = Hashset.new
+my_hashset.set('August')
+my_hashset.set('July')
+my_hashset.set('November')
+my_hashset.set('January')
+my_hashset.set('July')
+my_hashset.set('December')
+p my_hashset.get('July')
