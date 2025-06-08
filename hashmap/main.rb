@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/mashmap'
+require_relative 'lib/hashmap'
 require_relative 'lib/hashset'
 require_relative 'lib/node'
 
