@@ -17,6 +17,27 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
+
+p test.length
+test.set('jacket', 'yellow')
+test.set('hat', 'white')
+p test.length
+
+test.set('moon', 'silver')
+p test.length
+
+test.set('carrot', 'moldy')
+test.set('moon', 'bloodred')
+p test.length
+
 p test.keys
-test.remove('grape')
-p test.keys
+p test.values
+p test.entries
+
+test.remove('carrot')
+test.remove('frog')
+test.remove('sky')
+test.remove('dog')
+test.remove('elephant')
+test.remove('banana')
+p test.entries

@@ -59,6 +59,30 @@ class Hashmap
     node_array
   end
 
+  def check_resize
+    if @stored_keys > @capacity * @load_factor
+      @capacity *= 2
+      puts 'begins doubled reassignment'
+      reassign_buckets
+      return nil
+    end
+    if @capacity > 16 && @stored_keys < (@capacity * @load_factor) / 2 # rubocop:disable Style/GuardClause
+      @capacity /= 2
+      puts 'begins halved reassignment'
+      reassign_buckets
+      return nil # rubocop:disable Style/RedundantReturn
+    end
+  end
+
+  def reassign_buckets
+    node_array = gather_nodes
+    @buckets = Array.new(16)
+    node_array.each do |node|
+      @stored_keys -= 1
+      set(node.key, node.value)
+    end
+  end
+
   def hash(key)
     hash_code = 0
     prime_number = 31
@@ -75,7 +99,8 @@ class Hashmap
     else
       my_node.write_value(value)
     end
-    puts "#{key} stored in bucket #{hash(key)}"
+    puts "#{key} stored in bucket #{hash(key)}, #{@stored_keys}/#{@capacity}"
+    check_resize
   end
 
   def get(key)
@@ -104,6 +129,8 @@ class Hashmap
       previous_node.write_next(my_node.next_node)
     end
     @stored_keys -= 1
+    puts "#{key} removed from bucket #{hash(key)}, #{@stored_keys}/#{@capacity}"
+    check_resize
     my_node.value
   end
 
