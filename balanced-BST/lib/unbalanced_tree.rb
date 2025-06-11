@@ -43,7 +43,7 @@ class BST
       current_node = my_nodes.pop
       if current_node.instance_of?(Node)
         my_nodes << current_node.right_child unless current_node.right_child.nil?
-        my_nodes << current_node.value
+        current_node.amount.times { my_nodes << current_node.value }
         my_nodes << current_node.left_child unless current_node.left_child.nil?
       else
         my_array << current_node
