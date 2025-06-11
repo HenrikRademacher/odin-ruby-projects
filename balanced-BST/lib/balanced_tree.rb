@@ -14,6 +14,21 @@ class BBST
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
   end
 
+  def populate(input_array)
+    new_array = refine_duplicates(input_array)
+    @root = build_tree(new_array)
+  end
+
+  def refine_duplicates(input_array)
+    new_array = []
+    until input_array.empty?
+      element = input_array[0]
+      new_array << [element, input_array.count(element)]
+      input_array.delete(element)
+    end
+    new_array
+  end
+
   def build_tree(input_array)
     return nil if input_array.nil? || input_array.empty?
 
@@ -21,7 +36,7 @@ class BBST
     left_part = input_array.shift(pivot) if pivot.positive?
     mid = input_array.shift
     right_part = input_array
-    current_node = BalNode.new([mid, 1])
+    current_node = BalNode.new(mid)
     current_node.left_child = build_tree(left_part) unless left_part.nil?
     current_node.right_child = build_tree(right_part) unless right_part.nil?
     current_node

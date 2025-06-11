@@ -5,7 +5,7 @@ require_relative 'lib/balanced_tree'
 require_relative 'lib/node'
 require_relative 'lib/balanced_node'
 
-source_array = [37, 3, 90, 7, 33, 45, 10, 8, 1]
+source_array = [33, 3, 90, 7, 33, 45, 10, 8, 1]
 p source_array
 
 my_tree = BST.new
@@ -15,5 +15,7 @@ sorted_array = my_tree.inorder_traverse
 p sorted_array
 
 my_baltree = BBST.new
-my_baltree.root = my_baltree.build_tree(sorted_array)
+my_baltree.populate(sorted_array)
 my_baltree.pretty_print
+p my_baltree.root.right_child.left_child.value
+p my_baltree.root.right_child.left_child.amount

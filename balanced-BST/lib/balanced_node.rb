@@ -4,7 +4,7 @@
 class BalNode
   include Comparable
 
-  attr_accessor :value, :left_child, :right_child
+  attr_accessor :value, :left_child, :right_child, :amount
 
   def initialize(val_num_array)
     @value = val_num_array[0]
