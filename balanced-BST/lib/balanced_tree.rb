@@ -29,6 +29,18 @@ class BBST
     new_array
   end
 
+  def inorder_successor(given_node)
+    return given_node if given_node.left_child.nil?
+
+    inorder_successor(given_node.left_child)
+  end
+
+  def inorder_successor_parent(given_node)
+    return given_node if given_node.left_child.nil? || given_node.left_child.left_child.nil?
+
+    inorder_successor_parent(given_node.left_child)
+  end
+
   def build_tree(input_array)
     return nil if input_array.nil? || input_array.empty?
 
@@ -40,5 +52,81 @@ class BBST
     current_node.left_child = build_tree(left_part) unless left_part.nil?
     current_node.right_child = build_tree(right_part) unless right_part.nil?
     current_node
+  end
+
+  def insert(value)
+    stop = false
+    current_node = @root
+    until stop
+      case value <=> current_node.value
+      when 0
+        current_node.increase_amount
+        stop = true
+      when -1
+        if current_node.left_child.nil?
+          current_node.left_child = BalNode.new([value, 1])
+          stop = true
+        else
+          current_node = current_node.left_child
+        end
+      when 1
+        if current_node.right_child.nil?
+          current_node.right_child = BalNode.new([value, 1])
+          stop = true
+        else
+          current_node = current_node.right_child
+        end
+      end
+    end
+  end
+
+  def delete(value)
+    stop = false
+    current_node = @root
+    prev_node = nil
+    until stop
+      return if current_node.nil?
+
+      case value <=> current_node.value
+      when 0
+        if current_node.amount > 1
+          current_node.decrease_amount
+        elsif current_node.left_child.nil? && current_node.right_child.nil?
+          prev_node.left_child = nil if prev_node.left_child == current_node
+          prev_node.right_child = nil if prev_node.right_child == current_node
+        elsif current_node.left_child.nil?
+          prev_node.left_child = current_node.right_child if prev_node.left_child == current_node
+          prev_node.right_child = current_node.right_child if prev_node.right_child == current_node
+        elsif current_node.right_child.nil?
+          prev_node.left_child = current_node.left_child if prev_node.left_child == current_node
+          prev_node.right_child = current_node.left_child if prev_node.right_child == current_node
+        else
+          next_node = inorder_successor(current_node.right_child)
+          inorder_successor_parent(current_node.right_child).left_child = next_node.right_child
+          current_node.value = next_node.value
+          current_node.amount = next_node.amount
+        end
+        stop = true
+      when -1
+        prev_node = current_node
+        current_node = current_node.left_child
+      when 1
+        prev_node = current_node
+        current_node = current_node.right_child
+      end
+    end
+  end
+
+  def find(value, current_node = @root)
+    return nil if current_node.nil?
+
+    case value <=> current_node.value
+    when 0
+      current_node if current_node.value == value
+    when -1
+      find(value, current_node.left_child)
+    when 1
+      find(value, current_node.right_child)
+    end
   end
 end

@@ -20,4 +20,8 @@ class BalNode
   def increase_amount
     @amount += 1
   end
+
+  def decrease_amount
+    @amount -= 1
+  end
 end
