@@ -24,8 +24,14 @@ puts('')
 my_baltree.delete(40)
 my_baltree.pretty_print
 
+p my_baltree.find(33).amount
+
 puts('')
 my_baltree.insert(40)
 my_baltree.pretty_print
-
-p my_baltree.find(42).amount
+puts('')
+p my_baltree.itr_level_order
+my_baltree.itr_level_order { |node| puts "My node: #{node.value}" }
+puts('')
+p my_baltree.rec_level_order
+my_baltree.rec_level_order { |node| puts "My node: #{node.value}" }

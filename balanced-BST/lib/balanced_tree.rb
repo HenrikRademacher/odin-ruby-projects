@@ -122,11 +122,45 @@ class BBST
 
     case value <=> current_node.value
     when 0
-      current_node if current_node.value == value
+      current_node
     when -1
       find(value, current_node.left_child)
     when 1
       find(value, current_node.right_child)
+    end
+  end
+
+  def itr_level_order
+    output_array = []
+    working_queue = [@root]
+    until working_queue.empty?
+      current_node = working_queue.shift
+      working_queue.push(current_node.left_child) unless current_node.left_child.nil?
+      working_queue.push(current_node.right_child) unless current_node.right_child.nil?
+      if block_given?
+        current_node.amount.times { yield current_node }
+      else
+        current_node.amount.times { output_array << current_node.value }
+      end
+    end
+    output_array unless block_given?
+  end
+
+  def rec_level_order_helper(current_node = @root, current_level = 0, current_array = [])
+    return current_array if current_node.nil?
+
+    current_array = rec_level_order_helper(current_node.left_child, current_level + 1, current_array)
+    current_array[current_level] = [] if current_array[current_level].nil?
+    current_node.amount.times { current_array[current_level].push(current_node) }
+    rec_level_order_helper(current_node.right_child, current_level + 1, current_array)
+  end
+
+  def rec_level_order(&block)
+    output_array = rec_level_order_helper.flatten
+    if block_given?
+      output_array.each(&block)
+    else
+      output_array.collect(&:value)
     end
   end
 end
