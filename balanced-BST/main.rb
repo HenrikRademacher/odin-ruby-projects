@@ -35,3 +35,8 @@ my_baltree.itr_level_order { |node| puts "My node: #{node.value}" }
 puts('')
 p my_baltree.rec_level_order
 my_baltree.rec_level_order { |node| puts "My node: #{node.value}" }
+
+p my_baltree.rec_inorder
+my_baltree.rec_inorder { |node| puts "Recursively got: #{node.value}" }
+p my_baltree.rec_preorder
+p my_baltree.rec_postorder

@@ -9,9 +9,9 @@ class BBST
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
-    pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
+    pretty_print(node.right_child, "#{prefix}#{is_left ? '|   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
-    pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
+    pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '|   '}", true) if node.left_child
   end
 
   def populate(input_array)
@@ -162,5 +162,42 @@ class BBST
     else
       output_array.collect(&:value)
     end
+  end
+
+  def rec_inorder(current_node = @root, current_array = [], &block)
+    return current_array if current_node.nil?
+
+    current_array = rec_inorder(current_node.left_child, current_array, &block)
+    if block_given?
+      current_node.amount.times { yield current_node }
+    else
+      current_node.amount.times { current_array << current_node.value }
+    end
+    rec_inorder(current_node.right_child, current_array, &block)
+  end
+
+  def rec_preorder(current_node = @root, current_array = [], &block)
+    return current_array if current_node.nil?
+
+    if block_given?
+      current_node.amount.times { yield current_node }
+    else
+      current_node.amount.times { current_array << current_node.value }
+    end
+    current_array = rec_inorder(current_node.left_child, current_array, &block)
+    rec_inorder(current_node.right_child, current_array, &block)
+  end
+
+  def rec_postorder(current_node = @root, current_array = [], &block)
+    return current_array if current_node.nil?
+
+    current_array = rec_inorder(current_node.left_child, current_array, &block)
+    current_array = rec_inorder(current_node.right_child, current_array, &block)
+    if block_given?
+      current_node.amount.times { yield current_node }
+    else
+      current_node.amount.times { current_array << current_node.value }
+    end
+    current_array
   end
 end
