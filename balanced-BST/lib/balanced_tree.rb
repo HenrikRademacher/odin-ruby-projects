@@ -10,7 +10,7 @@ class BBST
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '|   ' : '    '}", false) if node.right_child
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
+    puts "#{prefix}#{is_left ? '\-- ' : '/-- '}#{node.value}"
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '|   '}", true) if node.left_child
   end
 
@@ -184,20 +184,80 @@ class BBST
     else
       current_node.amount.times { current_array << current_node.value }
     end
-    current_array = rec_inorder(current_node.left_child, current_array, &block)
-    rec_inorder(current_node.right_child, current_array, &block)
+    current_array = rec_preorder(current_node.left_child, current_array, &block)
+    rec_preorder(current_node.right_child, current_array, &block)
   end
 
   def rec_postorder(current_node = @root, current_array = [], &block)
     return current_array if current_node.nil?
 
-    current_array = rec_inorder(current_node.left_child, current_array, &block)
-    current_array = rec_inorder(current_node.right_child, current_array, &block)
+    current_array = rec_postorder(current_node.left_child, current_array, &block)
+    current_array = rec_postorder(current_node.right_child, current_array, &block)
     if block_given?
       current_node.amount.times { yield current_node }
     else
       current_node.amount.times { current_array << current_node.value }
     end
     current_array
+  end
+
+  def itr_inorder
+    output_array = []
+    working_stack = [[@root, false]]
+    until working_stack.empty?
+      current_node = working_stack.pop
+      if current_node[1] == true
+        if block_given?
+          current_node[0][0].amount.times { yield current_node[0][0] }
+        else
+          current_node[0][0].amount.times { output_array << current_node[0][0].value }
+        end
+      else
+        working_stack << [current_node[0].right_child, false] unless current_node[0].right_child.nil?
+        working_stack << [[current_node[0]], true]
+        working_stack << [current_node[0].left_child, false] unless current_node[0].left_child.nil?
+      end
+    end
+    output_array
+  end
+
+  def itr_preorder
+    output_array = []
+    working_stack = [[@root, false]]
+    until working_stack.empty?
+      current_node = working_stack.pop
+      if current_node[1] == true
+        if block_given?
+          current_node[0][0].amount.times { yield current_node[0][0] }
+        else
+          current_node[0][0].amount.times { output_array << current_node[0][0].value }
+        end
+      else
+        working_stack << [current_node[0].right_child, false] unless current_node[0].right_child.nil?
+        working_stack << [current_node[0].left_child, false] unless current_node[0].left_child.nil?
+        working_stack << [[current_node[0]], true]
+      end
+    end
+    output_array
+  end
+
+  def itr_postorder
+    output_array = []
+    working_stack = [[@root, false]]
+    until working_stack.empty?
+      current_node = working_stack.pop
+      if current_node[1] == true
+        if block_given?
+          current_node[0][0].amount.times { yield current_node[0][0] }
+        else
+          current_node[0][0].amount.times { output_array << current_node[0][0].value }
+        end
+      else
+        working_stack << [[current_node[0]], true]
+        working_stack << [current_node[0].right_child, false] unless current_node[0].right_child.nil?
+        working_stack << [current_node[0].left_child, false] unless current_node[0].left_child.nil?
+      end
+    end
+    output_array
   end
 end
