@@ -260,4 +260,19 @@ class BBST
     end
     output_array
   end
+
+  def depth(value)
+    current_node = @root
+    current_level = 0
+    until current_node.value == value || current_node.nil?
+      current_node = if value < current_node.value
+                       current_node.left_child
+                     else
+                       current_node.right_child
+                     end
+      current_level += 1
+    end
+    current_level = nil if current_node.nil?
+    current_level
+  end
 end

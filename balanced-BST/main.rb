@@ -40,6 +40,8 @@ puts('')
 # p my_baltree.itr_inorder
 # my_baltree.rec_inorder { |node| puts "Recursively got: #{node.value}" }
 # my_baltree.itr_inorder { |node| puts "Recursively got: #{node.value}" }
-p my_baltree.rec_postorder
-p my_baltree.itr_postorder
+
 # p my_baltree.rec_postorder
+# p my_baltree.itr_postorder
+
+p my_baltree.depth(75)
