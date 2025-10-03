@@ -24,6 +24,7 @@ class Guesser
       valid_answer = '' unless answer.instance_of?(Array)
       valid_answer = '' unless answer.length == 4
       valid_answer = '' unless answer.all? { |color| colors_available.include?(color) }
+      valid_answer = answer[0] if answer[0] == 'exit'
     end
     valid_answer
   end

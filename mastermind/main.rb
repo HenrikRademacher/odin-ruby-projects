@@ -12,13 +12,16 @@ end
 def start_gameloop(my_game, my_guesser)
   game_won = false
   game_lost = false
+  game_stopped = false
   puts "Valid colors are #{my_game.colors_available.join(', ')} seperated by commas."
-  until game_won || game_lost
+  until game_won || game_lost || game_stopped
     puts ''
     puts "You have #{my_guesser.remaining_guesses} guesses left."
     colors = my_guesser.make_guess(my_game.colors_available)
+    game_stopped = true if colors == 'exit'
     feedback = my_game.evaluate_guess(colors)
-    puts feedback
+    puts feedback unless colors == 'exit'
+    puts 'You quit the game' if colors == 'exit'
     if feedback[0] == '4'
       puts 'You have won the game by entering the correct code.'
       game_won = true
