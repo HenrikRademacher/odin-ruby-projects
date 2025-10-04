@@ -3,6 +3,7 @@
 # Creates the gameboard and its methods
 class GameBoard
   attr_reader :colors_available, :game_won, :game_lost, :game_quit, :remaining_guesses
+  attr_writer :colors_chosen
 
   def initialize
     @colors_available = %w[r g b m y c]
