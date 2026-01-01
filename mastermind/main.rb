@@ -4,6 +4,7 @@ require_relative 'lib/board'
 require_relative 'lib/human_guess'
 require_relative 'lib/greenwell_guess'
 require_relative 'lib/randy_guess'
+require_relative 'lib/knuth_guess'
 
 def play_game
   my_game = GameBoard.new
@@ -12,12 +13,20 @@ def play_game
 end
 
 def testing
-  my_game = GameBoard.new
-  my_solver = Greenwell.new
-  my_game.colors_chosen = %w[r g m m]
-  my_solver.commence_guessing(my_game)
+  my_array = [5, 2, 7, 13, 9]
+  my_other_array = my_array.clone.keep_if { |element| element > 5 }
+  p my_array
+  p my_other_array
 end
 # testing
+
+def debugging
+  my_game = GameBoard.new
+  my_solver = Knuth.new
+  puts "Code is #{my_game.colors_chosen}"
+  my_solver.start_gameloop(my_game)
+end
+# debugging
 
 def inquire_player_setting(my_game)
   input = -1

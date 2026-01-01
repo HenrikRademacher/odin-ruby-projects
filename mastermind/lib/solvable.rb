@@ -18,7 +18,7 @@ module Solvable
   def valid_combination?(guess, feedback, pretend_correct)
     # If pretend_correct was the right combination, would my guess return the feedback?
     answer = hypthetical_guess(guess, pretend_correct)
-    # puts "Pretend: #{pretend_correct}; Try: #{guess}; Receive: #{answer}; Expect: #{feedback}; Keep: #{answer == feedback}"
+    # puts "Pretend: #{pretend_correct}; Try: #{guess}; Get: #{answer}; Expect: #{feedback}; OK: #{answer == feedback}"
     answer == feedback
   end
 
@@ -51,6 +51,14 @@ module Solvable
       end
     end
     include_guess
+  end
+
+  def possible_feedback(feedback = [])
+    feedback.push([0, 0, 4], [0, 1, 3], [0, 2, 2], [0, 3, 1], [0, 4, 0])
+    feedback.push([1, 0, 3], [1, 1, 2], [1, 2, 1], [1, 3, 0])
+    feedback.push([2, 0, 2], [2, 1, 1], [2, 2, 0])
+    feedback.push([3, 0, 1], [3, 1, 0], [4, 0, 0])
+    feedback
   end
 end
 
