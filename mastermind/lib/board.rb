@@ -2,8 +2,7 @@
 
 # Creates the gameboard and its methods
 class GameBoard
-  attr_reader :colors_available, :game_won, :game_lost, :game_quit, :remaining_guesses
-  attr_writer :colors_chosen
+  attr_reader :colors_chosen, :colors_available, :game_won, :game_lost, :game_quit, :remaining_guesses
 
   def initialize
     @colors_available = %w[r g b m y c]
@@ -33,7 +32,7 @@ class GameBoard
       end
       valid_answer = true if answer[0] == 'exit'
     end
-    answer
+    @colors_chosen = answer
   end
 
   def evaluate_guess(selection)

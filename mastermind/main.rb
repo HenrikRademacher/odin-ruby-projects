@@ -3,6 +3,7 @@
 require_relative 'lib/board'
 require_relative 'lib/human_guess'
 require_relative 'lib/greenwell_guess'
+require_relative 'lib/randy_guess'
 
 def play_game
   my_game = GameBoard.new
