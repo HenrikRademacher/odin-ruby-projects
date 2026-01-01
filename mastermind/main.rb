@@ -41,8 +41,8 @@ def choose_enemy(my_game)
   my_game.select_colors_human
   answer = -1
   while answer != 0 && answer != 1 && answer != 2
-    puts "\n\nDo you want to play against Greenwell (0), Randy (1) or Knuth (2) ?"
-    answer = gets.chomp
+    puts "\nDo you want to play against Greenwell (0), Randy (1) or Knuth (2) ?"
+    answer = gets.chomp.to_i
   end
   assign_enemy(answer)
 end

@@ -47,8 +47,8 @@ class GameBoard
   def set_guess_consequences(perfect, guesses)
     @remaining_guesses -= 1
     @game_won = true if perfect == 4
-    @game_lost = true if @remaining_guesses.zero? && @game_won.false?
-    puts @colors_chosen if @game_lost
+    @game_lost = true if @remaining_guesses.zero? && @game_won == false
+    puts "The correct combination was #{@colors_chosen}." if @game_lost
     @game_quit = true if guesses[0] == 'exit'
   end
 

@@ -14,6 +14,44 @@ module Solvable
     end
     list
   end
+
+  def valid_combination?(guess, feedback, pretend_correct)
+    # If pretend_correct was the right combination, would my guess return the feedback?
+    answer = hypthetical_guess(guess, pretend_correct)
+    # puts "Pretend: #{pretend_correct}; Try: #{guess}; Receive: #{answer}; Expect: #{feedback}; Keep: #{answer == feedback}"
+    answer == feedback
+  end
+
+  def hypthetical_guess(selection, pretend_correct)
+    perfect_count, rest_selection, rest_colors = count_perfect_guess(selection, pretend_correct)
+    included_count = count_include_guess(rest_selection, rest_colors)
+    wrong_count = selection.length - perfect_count - included_count
+    [perfect_count, included_count, wrong_count]
+  end
+
+  def count_perfect_guess(color_guess, pretend_correct, rest_selection = [], rest_colors = [])
+    perfect_count = 0
+    color_guess.each_with_index do |guess, index|
+      if guess == pretend_correct[index]
+        perfect_count += 1
+      else
+        rest_selection << guess
+        rest_colors << pretend_correct[index]
+      end
+    end
+    [perfect_count, rest_selection, rest_colors]
+  end
+
+  def count_include_guess(rest_selection, rest_colors)
+    include_guess = 0
+    rest_selection.each do |guess|
+      if rest_colors.include?(guess)
+        include_guess += 1
+        rest_colors.delete_at(rest_colors.index(guess))
+      end
+    end
+    include_guess
+  end
 end
 
 # Strategy:
