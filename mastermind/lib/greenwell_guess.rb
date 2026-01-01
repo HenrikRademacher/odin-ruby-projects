@@ -13,7 +13,7 @@ class Greenwell
     @my_steps = []
   end
 
-  def commence_guessing(my_game)
+  def start_gameloop(my_game)
     @combination_total = create_combinations(my_game.colors_available)
     @my_colors = my_game.colors_available
     create_guessing_steps
@@ -50,5 +50,9 @@ class Greenwell
 
   def create_step6
     @my_steps << [@my_colors[5], @my_colors[5], @my_colors[3], @my_colors[2]]
+  end
+
+  def play_game
+    puts 'starting game as greenwell'
   end
 end
