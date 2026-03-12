@@ -201,9 +201,9 @@ class BBST
     current_array
   end
 
-  def itr_inorder
+  def itr_inorder(given_node = @root)
     output_array = []
-    working_stack = [[@root, false]]
+    working_stack = [[given_node, false]]
     until working_stack.empty?
       current_node = working_stack.pop
       if current_node[1] == true
@@ -274,5 +274,14 @@ class BBST
     end
     current_level = nil if current_node.nil?
     current_level
+  end
+
+  def height(value)
+    base_node = find(value)
+    return nil if base_node.nil?
+
+    node_children = itr_inorder(base_node)
+    node_heights = node_children.map { |current_value| depth(current_value) }
+    node_heights.max - depth(base_node.value)
   end
 end

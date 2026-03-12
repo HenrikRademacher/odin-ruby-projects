@@ -12,22 +12,25 @@ my_tree = BST.new
 my_tree.populate(source_array)
 
 sorted_array = my_tree.inorder_traverse
-p sorted_array
-puts('')
+# p sorted_array
+# puts('')
 
 my_baltree = BBST.new
 my_baltree.populate(sorted_array)
 my_baltree.insert(75)
 my_baltree.insert(33)
-my_baltree.pretty_print
-puts('')
+# my_baltree.pretty_print
+# puts('')
 my_baltree.delete(40)
-my_baltree.pretty_print
+# my_baltree.pretty_print
 
-p my_baltree.find(33).amount
+# p my_baltree.find(33).amount
 
 puts('')
 my_baltree.insert(40)
+# p my_baltree.depth(75)
+p my_baltree.height(33)
+
 my_baltree.pretty_print
 puts('')
 # p my_baltree.itr_level_order
@@ -37,11 +40,13 @@ puts('')
 # my_baltree.rec_level_order { |node| puts "My node: #{node.value}" }
 
 # p my_baltree.rec_inorder
-# p my_baltree.itr_inorder
 # my_baltree.rec_inorder { |node| puts "Recursively got: #{node.value}" }
-# my_baltree.itr_inorder { |node| puts "Recursively got: #{node.value}" }
+# puts('')
+# p my_baltree.itr_inorder
+# my_baltree.itr_inorder { |node| puts "Iteratively got: #{node.value}" }
 
 # p my_baltree.rec_postorder
+# my_baltree.rec_postorder { |node| puts "Recursively got: #{node.value}" }
+# puts('')
 # p my_baltree.itr_postorder
-
-p my_baltree.depth(75)
+# my_baltree.itr_postorder { |node| puts "Iteratively got: #{node.value}" }
